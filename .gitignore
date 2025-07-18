@@ -1,0 +1,8 @@
+# Ignora le dipendenze
+node_modules/
+
+# Ignora i file generati dal build
+dist/
+
+# Altri file di sistema
+.DS_Store
