@@ -35,6 +35,7 @@ Built with patience and passion using:
 - **Webpack** – for the code scalability and maintainability
 - **Lodash** - to manage the API calls and handle the results in details
 - **dotenv** - to keep the lighter files and a clearer code
+- **Axios** - to handle HTTP requests seamlessly 
 
 
 ## 📸 Screenshots
