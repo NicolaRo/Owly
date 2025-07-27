@@ -1,8 +1,8 @@
-// Importa gli stili SCSS - webpack li gestirà automaticamente
+// Importa gli stili SCSS
 import "../css/style.scss";
 
 // Importa le funzioni necessarie
-import { bookFinder } from "./api.js";
+import { bookFinder, getBookDetails } from "./api.js";
 import { renderResults, clearResults } from "./dom.js";
 
 // Event listeners e logica principale
@@ -54,17 +54,3 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 });
-
-// Test iniziale (puoi rimuoverlo dopo)
-/* 
-const testQuery = "harry potter";
-const testType = "title";
-
-bookFinder(testQuery, testType)
-  .then(results => {
-    console.log("Risultati dalla ricerca:", results);
-  })
-  .catch(error => {
-    console.error("Errore nella ricerca:", error);
-  });
-*/
