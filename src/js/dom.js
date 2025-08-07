@@ -1,6 +1,6 @@
-// dom.js - Gestisce solo la manipolazione del DOM
+// dom.js - Gestisce la manipolazione del DOM
 
-//Importo le funzioni nnecessarie
+//Importo le funzioni principali create in api.js
 
 import { getBookDetails, bookCover } from "./api.js";
 
@@ -11,93 +11,185 @@ export function clearResults() {
     existingResults.remove();
   }
 }
+
+// Attivazione modale in caso di errori
+// Variabile per tenere traccia del modale attivo
+let activeModal = null;
+
+export function showModal(message, isError = true) {
+  // Se non esiste nessun messaggio d'errore da mostrare chiude il modale
+  if (activeModal) closeModal();
+
+  // Crea il modale vero e proprio
+  // QUA CI VA UN ARIA-LABEL?
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <p style="color: ${isError ? '#d32f2f' : '#388e3c'}">${message}</p>
+      <button class="modal-close">OK</button>
+    </div>
+  `;
+  
+  document.body.appendChild(modal); // Appende il modale al body
+  activeModal = modal; 
+
+  // Chiude il modale al click del bottone "OK"
+  modal.querySelector('.modal-close').addEventListener('click', closeModal);
+}
+// Funzione per chiudere il modale se esiste
+function closeModal() {
+  if (activeModal) {
+    activeModal.remove();
+    activeModal = null;
+  }
+}
+
 // Funzione per renderizzare i risultati
 export function renderResults(books) {
-  console.log("Dom.js riceve questi libri:", books);
+  console.log("Dom.js riceve questi libri:", books); // Mostra a console il messaggio per debugging
 
   // 1. Pulisci risultati precedenti
   clearResults();
 
   // 2. Crea un container per i risultati (perché non esiste nell'HTML)
   const resultsContainer = document.createElement("div");
-  resultsContainer.className = "results-container";
+  resultsContainer.className = "results-container list-view";  // Imposta la classe per la visualizzazione predefinita
 
   // 3. Inserisci il container nella pagina (dopo la hero-section)
   const heroSection = document.querySelector(".hero-section");
-  heroSection.insertAdjacentElement("afterend", resultsContainer);
+  heroSection.insertAdjacentElement("afterend", resultsContainer); 
+
+  // 4. Crea il wrapper per il toggle che cambia la visualizzazione dei risultati
+  const togglePlaceholder = document.createElement("div");
+  togglePlaceholder.className = "toggle-placeholder";
+
+  const toggleButton = document.createElement("button"); // creazione del toggle (button) vero e proprio // QUA CI VA UN ARIA-LABEL?
+  toggleButton.className = "toggle-button";
   
+  toggleButton.textContent = "Cambia vista"; 
+
+  togglePlaceholder.appendChild(toggleButton);
+  resultsContainer.appendChild(togglePlaceholder);
+
+  // 5. Crea il wrapper che conterrà i book-result
+  const booksWrapper = document.createElement("div"); // QUA CI VA UN ARIA-LABEL?
+  booksWrapper.className = "books-wrapper";
+  resultsContainer.appendChild(booksWrapper);
+
+
+// 6. Aggiungi l'event listener al bottone per cambiare la visualizzazione
+toggleButton.addEventListener("click", () => {
+  // 6.1 Cambia la classe del container per alternare tra list-view e grid-view
+  if (resultsContainer.classList.contains("list-view")) {
+    resultsContainer.classList.remove("list-view");
+    resultsContainer.classList.add("grid-view");
+  } else {
+    resultsContainer.classList.remove("grid-view");
+    resultsContainer.classList.add("list-view");
+  }
+});
+
+ 
   // 4. Se non ci sono libri, mostra messaggio
   if (!books || books.length === 0) {
-    resultsContainer.innerHTML = "<p>Nessun risultato trovato</p>";
+    const noResultsMsg = document.createElement("p"); // QUA CI VA UN ARIA-LABEL?
+    noResultsMsg.textContent = "Nessun risultato trovato";
+    resultsContainer.appendChild(noResultsMsg);
     return;
   }
 
-  // 5. Crea HTML per ogni libro con copertina
-  books.forEach((book, index) => {
-    const coverId = book.cover_i;
-    const coverUrl = coverId
-      ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
-      : "img/placeholder.jpg";
+    // 5. Crea HTML per ogni libro con copertina
+    books.forEach((book) => {
+      const coverUrl = bookCover(book.cover_i); // QUA CI VA UN ARIA-LABEL?
+  
+      const bookDiv = document.createElement("div");
+      bookDiv.className = "book-result";
+      bookDiv.innerHTML = `
+        <h3>${book.title || "Titolo non disponibile"}</h3>
+        <div class="book-content">
+          <div class="book-left">
+            <img src="${coverUrl}" alt="Copertina del libro" class="book-cover">
+            <button 
+              class="book-details" 
+              value="${book.key}"
+              data-cover="${book.cover_i}" >
+              Dettagli Libro
+            </button>
+          </div>
+          <div class="book-right">
+            <p><strong>Autore:</strong> ${
+              book.author_name ? book.author_name.join(", ") : "Autore non disponibile"
+            }</p>
+            <p><strong>Anno:</strong> ${
+              book.first_publish_year || "Anno non disponibile"
+            }</p>
+          </div>
+        </div>
+      `;
+  
+      booksWrapper.appendChild(bookDiv);
+    });
 
-    const bookDiv = document.createElement("div");
-    bookDiv.className = "book-result";
-    bookDiv.innerHTML =
-      // Inserisci i dati del libro nell'HTML
-      ` <h3>${book.title || "Titolo non disponibile"}</h3>
-
-      <img src="${coverUrl}" 
-        alt="Copertina del libro" 
-        class="book-cover"
-      >
-      <p><strong>Autore:</strong> ${
-        book.author_name
-          ? book.author_name.join(", ")
-          : "Autore non disponibile"
-      }</p>
-      <p><strong>Anno:</strong> ${
-        book.first_publish_year || "Anno non disponibile"
-      }</p>
-      <button 
-        class="book-details" 
-        value="${book.key}"
-        data-cover="${coverId}" 
-        >
-        Dettagli Libro
-      </button> 
-    `;
-    resultsContainer.appendChild(bookDiv);
-  });
-  // 6. Crea un div per la descrizione del libro
-  const bookDescription = document.createElement("div");
-  bookDescription.className = "book-description";
-  bookDescription.innerHTML = "<p>Seleziona un libro per vedere i dettagli</p>";
-  resultsContainer.appendChild(bookDescription);
-  // 7. Aggiungi un event listener per i bottoni dei dettagli
-  const bookDetailsButtons = document.querySelectorAll(".book-details");
+  // 6. Aggiungi un event listener per il bottone "Dettagli libro"
+  const bookDetailsButtons = document.querySelectorAll(".book-details"); // QUA CI VA UN ARIA-LABEL?
   bookDetailsButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      const bookKey = button.value; // Assicurati che "value" sia definito
-      const coverId = button.getAttribute('data-cover');
+      // 6.1 Rimuove eventuale modale già presente
+      const existingModal = document.querySelector(".book-description");
+      if (existingModal) {
+        existingModal.remove();
+      }
+
+      const bookKey = button.value;
+      const coverId = button.getAttribute("data-cover");
       const coverUrl = bookCover(coverId);
+
+      // 6.2 Crea il div per la descrizione del libro (modale)
+      const bookDescription = document.createElement("div"); // QUA CI VA UN ARIA-LABEL?
+      bookDescription.className = "book-description";
+
+      // 6.3 Aggiungi un bottone di chiusura del modale
+      const closeButton = document.createElement("button"); // QUA CI VA UN ARIA-LABEL?
+      closeButton.className = "close-button";
+      closeButton.textContent = "Chiudi";
+      closeButton.addEventListener("click", () => {
+        bookDescription.remove();
+      });
+
+      // 6.4 Appendo subito il div (per renderlo riutilizzabile anche nel "catch")
+      resultsContainer.appendChild(bookDescription);
+
+      // 7 Recupera i dettagli del libro
       getBookDetails(bookKey)
         .then((details) => {
-          console.log("Dettagli libro:", details);
-          // Mostra i dettagli del libro nella descrizione
-         
           bookDescription.innerHTML = `
-  <h4>${details.title}</h4>
-  
-  <p><strong>Autore:</strong> ${details.author_name.join(", ")}</p>
-  <p><strong>Anno:</strong> ${details.first_publish_year}</p>
-  <p><strong>Descrizione:</strong> ${details.description || "Nessuna descrizione disponibile."}</p>
-  <img src="${coverUrl}" alt="Copertina del libro" class="book-cover">
-`;
+            <h4>${details.title || "Titolo non disponibile"}</h4>
+            <img src="${coverUrl}" alt="Copertina del libro" class="book-cover">
+            <p><strong>Autore:</strong> ${
+              details.author_name && details.author_name.length > 0 // controlla che il nome dell'autore sia disponible e thruty
+                ? details.author_name.join(", ") //Se thruty lo mostra a display
+                : "Autore non disponibile" // Se il valore ottenuto è falsy informa che l'info non è disponibile
+            }</p>
+            <p><strong>Anno:</strong> ${
+              details.first_publish_year || "Anno non disponibile"
+            }</p>
+            <p><strong>Descrizione:</strong> ${
+              details.description || "Nessuna descrizione disponibile."
+            }</p>
+          `;
         })
-        .catch((error) => {
-          console.error("Errore nel recupero dei dettagli del libro:", error);
+        
+        // 8 Funzione catch per gestire gli errori
+        .catch((error) => { 
+          console.error("Errore nel recupero dei dettagli del libro:", error); // Mostra l'errore a console per debugging
           bookDescription.innerHTML =
             "<p>Errore nel caricamento dei dettagli del libro.</p>";
+        })
+        // 8.1. se non ci sono errori crea il modale con il bottone di chiusura
+        .finally(() => {  
+          bookDescription.appendChild(closeButton);
         });
     });
   });
-}
+  }
