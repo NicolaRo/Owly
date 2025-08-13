@@ -1,9 +1,10 @@
-$section-background: #46f0a789;
-$button-color: #04ab63;
+$section-background: #0a0f3e5f;
+$button-color: #0a0f3ed8;
 $border-radius: 5px;
 $box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+$box-negative-shadow: 3px 3px 5pxrgba(250, 247, 247, 0.4);
 $section-border-radius: 10px;
-$book-result-background: rgba(70, 240, 167, 0.537254902);
+$book-result-background: #1b289c5c;
 
 @mixin button-base {
     padding: 1rem;
@@ -13,7 +14,7 @@ $book-result-background: rgba(70, 240, 167, 0.537254902);
     cursor: pointer;
     box-shadow: $box-shadow;
     transition: background-color 0.3s ease;
-    height: 3rem;
+    height: fit-content;
     color:#ffff;
     font-size: 1rem;
   }
@@ -23,3 +24,13 @@ $book-result-background: rgba(70, 240, 167, 0.537254902);
     border-radius: $section-border-radius;
     width: 100vw;
   }
+
+@mixin book-preview-details {
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: $border-radius;
+  width:fit-content;
+  height: fit-content;
+  margin: 1rem;
+}
