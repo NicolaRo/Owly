@@ -20,8 +20,7 @@ This application lets you **find a book by its title, genre or Authors** deliver
 
 ## 🧪 Try It Live
 
-👉 [Click here to try The Counter-Top online!]([https://************.app/)
-
+👉 [Click here to try]
 ---
 
 ## 🛠 Tech Stack
@@ -39,13 +38,16 @@ Built with patience and passion using:
 
 
 ## 📸 Screenshots
----![Screenshot 2025-06-29 alle 17 04 11](https://github.com/user-attachments/assets/7f66d7e4-ff35-4126-9ce5-e725ba05cf7d)
----
+<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 16 29" src="https://github.com/user-attachments/assets/4a1d6aa0-8e1a-42ea-abda-d7e033c630c8" />
+<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 15 29" src="https://github.com/user-attachments/assets/1cb7e2be-325c-4a44-a5f8-2451a54bcdf4" />
+<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 15 10" src="https://github.com/user-attachments/assets/bd7af7e1-3a29-4aa5-8254-5caab665b107" />
+<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 15 01" src="https://github.com/user-attachments/assets/726dbcc3-89b8-45de-a1ff-f128f04845f7" />
+
 
 ## 🚀 Getting Started (Dev Mode)
 
 Clone the repo and launch with Live Server (or any static web server):
 
 ```bash
-git clone https://github.com/NicolaRo/the-counter-top.git
-cd the-counter-top
+git clone https://github.com/NicolaRo/owly
+cd owly
