@@ -38,11 +38,9 @@ Built with patience and passion using:
 
 
 ## 📸 Screenshots
-<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 16 29" src="https://github.com/user-attachments/assets/4a1d6aa0-8e1a-42ea-abda-d7e033c630c8" />
-<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 15 29" src="https://github.com/user-attachments/assets/1cb7e2be-325c-4a44-a5f8-2451a54bcdf4" />
-<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 15 10" src="https://github.com/user-attachments/assets/bd7af7e1-3a29-4aa5-8254-5caab665b107" />
-<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 15 01" src="https://github.com/user-attachments/assets/726dbcc3-89b8-45de-a1ff-f128f04845f7" />
-
+<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 16 29" src="https://github.com/user-attachments/assets/b5b96d44-75f7-43e2-be73-797766023581" />
+<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 15 29" src="https://github.com/user-attachments/assets/c728360d-f573-457f-b6a0-5e50827692df" />
+<img width="3104" height="1974" alt="Screenshot 2025-08-13 alle 15 15 10" src="https://github.com/user-attachments/assets/38be9c35-eb17-4441-9cd4-d52a9bfaf3a5" />
 
 ## 🚀 Getting Started (Dev Mode)
 
