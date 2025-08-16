@@ -44,8 +44,20 @@ Built with patience and passion using:
 
 ## 🚀 Getting Started (Dev Mode)
 
+## 🌱 Environment Variables
+The project uses a .env file for local configurations.
+
+# 📄 create your local file to get started:
+cp .env.example .env
+
+# ✏️ edit .env with real values
+npm start               # 🚀 start development
+npm run build           # 🏗️ production build
+
+⚠️ Note: Do not commit your .env file. Only .env.example should stay in the repo as a reference.
 Clone the repo and launch with Live Server (or any static web server):
 
 ```bash
 git clone https://github.com/NicolaRo/owly
 cd owly
+
