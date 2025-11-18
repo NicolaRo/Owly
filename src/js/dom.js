@@ -363,7 +363,7 @@ export function renderResults(books) {
     const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
     const isLiked = favorites.includes(book.key);
 
-    // AGGIUNGI QUESTA VARIABILE - Determina se siamo in list-view e su mobile
+    // Determina se siamo in list-view e su mobile
     const isListViewMobile = savedView === "list-view" && window.innerWidth <= 768;
 
     bookDiv.innerHTML = `
