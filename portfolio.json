@@ -1,0 +1,9 @@
+{
+  "title": "Owly",
+  "tags": ["Javascript", "CSS"],
+  "demo": {
+    "type": "live",
+    "url": "https://owly-mastro-libraio.netlify.app/"
+  },
+  "logo": "owly.png"
+}
